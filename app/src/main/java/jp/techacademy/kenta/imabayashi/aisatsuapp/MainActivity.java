@@ -7,18 +7,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
+//参考：https://stackoverflow.com/questions/15027987/how-to-read-timepicker-chosen-values
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,TimePickerDialog.OnTimeSetListener {
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private int pickerHour = 0;
+    private int pickerMin = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("UI-PARTS", "test");
 
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(this);
-
-
 
     }
 
@@ -41,5 +43,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 0,  // 初期値（分）
                 true);
         timePickerDialog.show();
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        pickerHour = hourOfDay;
+        pickerMin = minute;
+
+        Log.d("UI-PARTS", String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
     }
 }
