@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.TimePicker;
 //参考：https://stackoverflow.com/questions/15027987/how-to-read-timepicker-chosen-values
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,TimePickerDialog.OnTimeSetListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private int pickerHour = 0;
     private int pickerMin = 0;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(this);
 
+        //TextViewの表示の際は、「テキスト」が表示出来ている
+        TextView textView = (TextView) findViewById(R.id.text);
+        textView.setText("テキスト!");
     }
 
     @Override
@@ -36,7 +40,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Log.d("UI-PARTS", String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
+                        Log.d("UI-PARTS", String.valueOf(hourOfDay) + "::" + String.valueOf(minute));
+
+                        String s_hourOfDay = String.valueOf(hourOfDay);
+                        String s_minute = String.valueOf(hourOfDay);
+
+                        //TextView:id textに時間を表示する。
+                        TextView textView = (TextView) findViewById(R.id.text);
+
+                        if (hourOfDay > 2 && hourOfDay < 10) {
+                            textView.setText("おはよう");
+                        } else if (hourOfDay >= 10 && hourOfDay < 18){
+                            textView.setText("こんにちは");
+                        }else{
+                            textView.setText("こんばんは");
+                        }
                     }
                 },
                 13, // 初期値（時間）
@@ -44,14 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 true);
         timePickerDialog.show();
 
+
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-        pickerHour = hourOfDay;
-        pickerMin = minute;
-
-        Log.d("UI-PARTS", String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
-    }
 }
